@@ -1,9 +1,7 @@
 from __future__ import annotations
 from abc import ABCMeta
 from abc import abstractmethod
-import logging
 from typing import List, Union
-import sys
 import pandas as pd
 
 import pupil as pp
@@ -227,4 +225,3 @@ class MergedProcessing(BaseProcessing):
         pd.DataFrame
         """
         pass
-

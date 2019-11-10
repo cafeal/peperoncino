@@ -7,6 +7,7 @@ from pupil.processing import ColumnsChangedError
 from pupil.processing import RowsChangedError
 
 from pupil.processings.pipeline import Pipeline
+from pupil.processings.query import Query
 
 
 def get_logger():
