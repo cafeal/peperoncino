@@ -1,7 +1,7 @@
 from __future__ import annotations
 from abc import ABCMeta
 from abc import abstractmethod
-from typing import List, Union
+from typing import List, Union, Any, Optional
 import pandas as pd
 
 import pupil as pp
@@ -23,8 +23,8 @@ class BaseProcessing(metaclass=ABCMeta):
     def __init__(self, is_fixed_columns: bool = True, is_fixed_rows: bool = True):
         self._is_fixed_columns = is_fixed_columns
         self._is_fixed_rows = is_fixed_rows
-        self._logs = []
-        self._indices = None
+        self._logs: List[Any] = []
+        self._indices: Optional[List[int]] = None
 
     @property
     def is_fixed_columns(self) -> bool:
@@ -34,14 +34,14 @@ class BaseProcessing(metaclass=ABCMeta):
     def is_fixed_rows(self) -> bool:
         return self._is_fixed_rows
 
-    def _logging(self, msg: str, level: str = "info"):
+    def _logging(self, msg: str, level: str = "info") -> None:
         if level not in ["fatal", "error", "warning", "info", "debug"]:
             raise ValueError(
                 "`level` should be one of fatal, error, warning, info and debug"
             )
         self._logs.append((msg, level))
 
-    def _flush_logs(self):
+    def _flush_logs(self) -> None:
         for msg, level in self._logs:
             log_fn = getattr(pp.logger, level)
             log_fn(msg)
@@ -119,7 +119,13 @@ class BaseProcessing(metaclass=ABCMeta):
 
         return dfs
 
-    def _logging_summary(self, cols, rows, orig_cols, orig_rows):
+    def _logging_summary(
+        self,
+        cols: List[pd.Index],
+        rows: List[pd.Index],
+        orig_cols: List[pd.Index],
+        orig_rows: List[pd.Index],
+    ) -> None:
         for i, (col, row, orig_col, orig_row) in enumerate(
             zip(cols, rows, orig_cols, orig_rows)
         ):

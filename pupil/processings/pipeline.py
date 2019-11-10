@@ -5,12 +5,13 @@ from pupil import BaseProcessing
 
 class Pipeline(BaseProcessing):
     """Connect multiple processings
-    
+
     Parameters
     ----------
     *procs : List[BaseProcessing]
     """
-    def __init__(self, *procs: List[BaseProcessing]):
+
+    def __init__(self, *procs: BaseProcessing):
         super().__init__(is_fixed_columns=False, is_fixed_rows=False)
         self._procs = procs
 

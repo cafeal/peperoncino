@@ -1,16 +1,17 @@
 __version__ = "0.1.0"
 
-from pupil.processing import BaseProcessing
-from pupil.processing import SeparatedProcessing
-from pupil.processing import MergedProcessing
-from pupil.processing import ColumnsChangedError
-from pupil.processing import RowsChangedError
+from pupil.processing import BaseProcessing  # NOQA
+from pupil.processing import SeparatedProcessing  # NOQA
+from pupil.processing import MergedProcessing  # NOQA
+from pupil.processing import ColumnsChangedError  # NOQA
+from pupil.processing import RowsChangedError  # NOQA
 
-from pupil.processings.pipeline import Pipeline
-from pupil.processings.query import Query
+from pupil.processings.pipeline import Pipeline  # NOQA
+from pupil.processings.query import Query  # NOQA
+from pupil.processings.apply_column import ApplyColumn  # NOQA
 
 
-def get_logger():
+def get_logger():  # type: ignore
     import logging
     import sys
 
