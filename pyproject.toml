@@ -5,10 +5,17 @@ description = ""
 authors = ["Junki Ishikawa <69guitar1015@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.７"
+numpy = "^1.17"
+pandas = "^0.25.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
+pytest-flake8 = "^1.0"
+pylint = "^2.4"
+autopep8 = "^1.4"
+pytest-cov = "^2.8"
+black = "^19.3b0"
 
 [build-system]
 requires = ["poetry>=0.12"]
