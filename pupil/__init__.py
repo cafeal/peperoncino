@@ -6,6 +6,8 @@ from pupil.processing import MergedProcessing
 from pupil.processing import ColumnsChangedError
 from pupil.processing import RowsChangedError
 
+from pupil.processings.pipeline import Pipeline
+
 
 def get_logger():
     import logging
