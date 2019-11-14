@@ -13,6 +13,7 @@ from pupil.processings.as_category import AsCategory  # NOQA
 from pupil.processings.rename_columns import RenameColumns  # NOQA
 from pupil.processings.assign import Assign  # NOQA
 from pupil.processings.drop_columns import DropColumns  # NOQA
+from pupil.processings.drop_duplicates import DropDuplicates  # NOQA
 
 
 def get_logger():  # type: ignore
