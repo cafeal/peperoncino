@@ -11,6 +11,7 @@ from pupil.processings.query import Query  # NOQA
 from pupil.processings.apply_column import ApplyColumn  # NOQA
 from pupil.processings.as_category import AsCategory  # NOQA
 from pupil.processings.rename_columns import RenameColumns  # NOQA
+from pupil.processings.assign import Assign  # NOQA
 
 
 def get_logger():  # type: ignore
