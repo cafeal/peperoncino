@@ -122,35 +122,43 @@ class TestSeparatedProcessing:
 
 
 class ExampleMergedProcessing(pp.MergedProcessing):
+    def __init__(self, dtype):
+        super().__init__()
+        self._dtype = dtype
+
     def simul_process(self, df):
         df.a = df.a + np.arange(len(df.a))
+        df = df.astype({"a": self._dtype})
         return df
 
 
 class TestMergedProcessing:
-    def test_process(self, df):
-        proc = ExampleMergedProcessing()
+    @pytest.mark.parametrize(
+        "dtype", ["float32", "float64", "int32", "int64", "Int32", "Int64"],
+    )
+    def test_process(self, df, dtype):
+        proc = ExampleMergedProcessing(dtype)
 
         # fmt: off
         dfs = proc.process([
-            df.assign(c=np.array([7, 8, 9], dtype=int)),
-            df.assign(d=np.array([10, 11, 12], dtype=int)),
+            df.assign(c=np.array([7, 8, 9])).astype(dtype),
+            df.assign(d=np.array([10, 11, 12])).astype(dtype),
         ])
         # fmt: on
 
         assert len(dfs) == 2
-
         # fmt: off
-        print(dfs[0])
         assert dfs[0].equals(pd.DataFrame({
             "a": [1, 3, 5],  # [1, 2, 3] + [0, 1, 2]
             "b": [4, 5, 6],
             "c": [7, 8, 9],
-        }))
+        }).astype(dtype))
+        # fmt: on
 
+        # fmt: off
         assert dfs[1].equals(pd.DataFrame({
             "a": [4, 6, 8],  # [1, 2, 3] + [3, 4, 5]
             "b": [4, 5, 6],
             "d": [10, 11, 12],
-        }))
+        }).astype(dtype))
         # fmt: on

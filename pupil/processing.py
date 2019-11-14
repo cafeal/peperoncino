@@ -1,7 +1,8 @@
 from __future__ import annotations
 from abc import ABCMeta
 from abc import abstractmethod
-from typing import List, Union, Any, Optional
+from typing import List, Set, Dict, Union, Any, Optional
+import numpy as np
 import pandas as pd
 
 import pupil as pp
@@ -191,32 +192,111 @@ class MergedProcessing(BaseProcessing):
     """
 
     def _process(self, dfs: List[pd.DataFrame]) -> List[pd.DataFrame]:
-        dtypes = [df.dtypes for df in dfs]
-        dfs = [df.assign(__DFID__=i) for i, df in enumerate(dfs)]
-        merged_df = pd.concat(dfs, axis=0, sort=False)
+        orig_dtypes = self._gather_dtypes(dfs)
+        dfs = [self._make_int_cols_nullable(df) for df in dfs]
+        dtypes = self._gather_dtypes(dfs)
+        df_indices = [df.index for df in dfs]
 
-        original_index = merged_df.index
-        merged_df = merged_df.reset_index(drop=True)
+        xcols: List[List[str]] = []
+        # set cols with valid dtype
+        for i, df in enumerate(dfs):
+            xcol = list(set(dtypes.keys()) - set(df.columns))
+            df = df.assign(**{c: np.nan for c in xcol})
+            df = df.astype(dtypes)
+            dfs[i] = df
+            xcols.append(xcol)
+
+        # preserve dataframe ids and merge dataframes
+        dfs = [df.assign(__DFID__=i) for i, df in enumerate(dfs)]
+        merged_df = pd.concat(dfs, axis=0, sort=False).reset_index(drop=True)
+        indices = [merged_df.query("__DFID__ == @i").index for i in range(len(dfs))]
+        merged_df = merged_df.drop(columns="__DFID__")
+
+        merged_df = self.simul_process(merged_df)
+
+        for i, (index, df_index, xcol) in enumerate(zip(indices, df_indices, xcols)):
+            df = merged_df.loc[index]
+            df = df.drop(columns=xcol)
+            df.index = df_index
+            dfs[i] = df
+
+        # Restore original dtype (only integers)
+        restore_int = {}
+        for c, dtype in dtypes.items():
+            if not dtype.startswith("Int"):
+                continue
+            restore_int[c] = orig_dtypes[c]
+
+        for i, df in enumerate(dfs):
+            _dtypes = {k: v for k, v in restore_int.items() if k in df.columns}
+            if len(_dtypes) > 0:
+                dfs[i] = df.astype(_dtypes)
+
+        return dfs
+
+    def _gather_dtypes(self, dfs: List[pd.DataFrame]) -> Dict[str, str]:
+        col_set: Set[str] = set()
+        for df in dfs:
+            col_set |= set(df.columns)
+
+        dtypes: Dict[str, str] = {}
+        for c in col_set:
+            dtype_set: Set[str] = set()
+            for df in dfs:
+                if c not in df.columns:
+                    continue
+                dtype_set.add(str(df.dtypes[c]))
+
+            if len(dtype_set) >= 2:
+                raise ValueError(
+                    f"Column {c} has different dtypes"
+                    f"across given dataframes: {dtypes}"
+                )
+
+            dtypes[c] = dtype_set.pop()
+        return dtypes
+
+    def __process(self, dfs: List[pd.DataFrame]) -> List[pd.DataFrame]:
+        # make integer columns nullable
+        dfs = [self._make_int_cols_nullable(df) for df in dfs]
+        # preserve original index
+        orig_indices = [df.index for df in dfs]
+        # assign id and concat
+        dfs = [df.assign(__DFID__=i) for i, df in enumerate(dfs)]
+        merged_df = pd.concat(dfs, axis=0, sort=False).reset_index(drop=True)
+        # preserve which indices are belonging to which df
+        indices = [merged_df.query("__DFID__ == @i").index for i in range(len(dfs))]
+        merged_df = merged_df.drop(columns="__DFID__")
+
+        print(merged_df.dtypes)
 
         dropped_cols = []
         for df in dfs:
-            # columns by merging will be dropped
+            # columns added by merging operation will be dropped
             dropped_cols.append(set(merged_df.columns) - set(df.columns))
 
         merged_df = self.simul_process(merged_df)
-        merged_df.index = original_index
 
-        for i, (df, dtype) in enumerate(zip(dfs, dtypes)):
+        for i, (df, index, orig_index) in enumerate(zip(dfs, indices, orig_indices)):
             # columns dropped in processing will be dropped too
             dcols = set(df.columns) - set(merged_df.columns)
             dcols |= dropped_cols[i]
             cols = [c for c in merged_df.columns if c not in dcols]
 
-            df = merged_df.query("__DFID__ == @i").get(cols)
-            df = df.drop(columns="__DFID__")
-            dfs[i] = df.astype(dtype)
+            df = merged_df.loc[index].get(cols)
+            df.index = orig_index
+            dfs[i] = df
 
         return dfs
+
+    def _make_int_cols_nullable(self, df: pd.DataFrame) -> pd.DataFrame:
+        dtypes = df.dtypes.astype(str)
+        # select int
+        dtypes = dtypes[dtypes.str.startswith("int")]
+        # capitalized(e.g. Int64) int type accepts NaN
+        dtypes = dtypes.str.capitalize()
+
+        return df.astype(dtypes)
 
     @abstractmethod
     def simul_process(self, df: pd.DataFrame) -> pd.DataFrame:
