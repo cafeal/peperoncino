@@ -60,6 +60,10 @@ class BaseProcessing(metaclass=ABCMeta):
         List[pd.DataFrame]
         """
 
+        assert isinstance(dfs, list)
+        for df in dfs:
+            assert isinstance(df, pd.DataFrame)
+
         self._logging(f"Applying: {self.__class__.__name__}")
 
         # memory columns
