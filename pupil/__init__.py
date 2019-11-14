@@ -14,6 +14,7 @@ from pupil.processings.rename_columns import RenameColumns  # NOQA
 from pupil.processings.assign import Assign  # NOQA
 from pupil.processings.drop_columns import DropColumns  # NOQA
 from pupil.processings.drop_duplicates import DropDuplicates  # NOQA
+from pupil.processings.combinations import Combinations  # NOQA
 
 
 def get_logger():  # type: ignore
