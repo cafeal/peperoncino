@@ -10,6 +10,7 @@ from pupil.processings.pipeline import Pipeline  # NOQA
 from pupil.processings.query import Query  # NOQA
 from pupil.processings.apply_column import ApplyColumn  # NOQA
 from pupil.processings.as_category import AsCategory  # NOQA
+from pupil.processings.rename_columns import RenameColumns  # NOQA
 
 
 def get_logger():  # type: ignore
