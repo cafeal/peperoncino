@@ -15,8 +15,8 @@ class TestAsCategory:
         proc = pp.AsCategory(["a"], fillna=fillna)
 
         (df,) = proc.process([df])
-        assert isinstance(df.a.dtype, pd.CategoricalDtype)
-        assert df.dtypes["b"] == "object"
+        assert pd.api.types.is_categorical_dtype(df.a)
+        assert pd.api.types.is_string_dtype(df.b)
 
         if fillna:
             assert set(df.a.cat.categories) == {"foo", "bar", "baz", "NaN"}

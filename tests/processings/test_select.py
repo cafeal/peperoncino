@@ -1,4 +1,5 @@
 import pytest
+from pandas.testing import assert_frame_equal
 import pandas as pd
 import pupil as pp
 
@@ -16,4 +17,4 @@ class TestSelet:
         df = pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6], "c": [7, 8, 9]})
         proc = pp.Select(cols, lackable_cols=lackable_cols)
         (df,) = proc.process([df])
-        df.equals(pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]}))
+        assert_frame_equal(df, pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]}))

@@ -1,5 +1,6 @@
 import pytest
 import pandas as pd
+from pandas.testing import assert_frame_equal
 import pupil as pp
 
 
@@ -16,4 +17,4 @@ class TestApplyColumn:
         proc = pp.ApplyColumn(col, fn)
         (df,) = proc.process([df])
 
-        assert df.equals(pd.DataFrame({"a": [2, 4, 6], "b": [4, 5, 6]}))
+        assert_frame_equal(df, pd.DataFrame({"a": [2, 4, 6], "b": [4, 5, 6]}))

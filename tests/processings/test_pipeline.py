@@ -1,4 +1,5 @@
 import pandas as pd
+from pandas.testing import assert_frame_equal
 import pupil as pp
 
 
@@ -26,9 +27,6 @@ class TestPipeline:
 
         (df,) = proc.process([df])
 
-        # fmt: off
-        assert df.equals(pd.DataFrame({
-            "A": [1, 2, 3, 1, 2, 3],
-            "b": [4, 5, 6, 4, 5, 6],
-        }))
-        # fmt: on
+        assert_frame_equal(
+            df, pd.DataFrame({"A": [1, 2, 3, 1, 2, 3], "b": [4, 5, 6, 4, 5, 6]})
+        )

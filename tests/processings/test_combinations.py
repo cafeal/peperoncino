@@ -1,5 +1,7 @@
 import pytest
 import pandas as pd
+from pandas.testing import assert_frame_equal
+
 import pupil as pp
 
 
@@ -22,7 +24,8 @@ class TestCombinations:
 
         if comb_type == "combinations":
             (df,) = proc.process([df])
-            assert df.equals(
+            assert_frame_equal(
+                df,
                 pd.DataFrame(
                     {
                         "a": [1, 2, 3],
@@ -36,11 +39,12 @@ class TestCombinations:
                         "*_b_c": [4 * 7, 5 * 8, 6 * 9],
                         "/_b_c": [4 / 7, 5 / 8, 6 / 9],
                     }
-                )
+                ),
             )
         elif comb_type == "combinations_with_replacement":
             (df,) = proc.process([df])
-            assert df.equals(
+            assert_frame_equal(
+                df,
                 pd.DataFrame(
                     {
                         "a": [1, 2, 3],
@@ -60,11 +64,12 @@ class TestCombinations:
                         "*_c_c": [7 * 7, 8 * 8, 9 * 9],
                         "/_c_c": [7 / 7, 8 / 8, 9 / 9],
                     }
-                )
+                ),
             )
         elif comb_type == "product":
             (df,) = proc.process([df])
-            assert df.equals(
+            assert_frame_equal(
+                df,
                 pd.DataFrame(
                     {
                         "a": [1, 2, 3],
@@ -90,12 +95,13 @@ class TestCombinations:
                         "*_c_c": [7 * 7, 8 * 8, 9 * 9],
                         "/_c_c": [7 / 7, 8 / 8, 9 / 9],
                     }
-                )
+                ),
             )
         elif comb_type == "permutations":
             (df,) = proc.process([df])
-            print(df.columns)
-            assert df.equals(
+
+            assert_frame_equal(
+                df,
                 pd.DataFrame(
                     {
                         "a": [1, 2, 3],
@@ -115,5 +121,5 @@ class TestCombinations:
                         "*_c_b": [7 * 4, 8 * 5, 9 * 6],
                         "/_c_b": [7 / 4, 8 / 5, 9 / 6],
                     }
-                )
+                ),
             )

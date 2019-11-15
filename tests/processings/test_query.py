@@ -1,5 +1,6 @@
 import pytest
 import pandas as pd
+from pandas.testing import assert_frame_equal
 import pupil as pp
 
 
@@ -13,4 +14,4 @@ class TestQuery:
         proc = pp.Query(query)
 
         (df,) = proc.process([df])
-        assert df.equals(pd.DataFrame({"a": [1], "b": [4]}))
+        assert_frame_equal(df, pd.DataFrame({"a": [1], "b": [4]}))
