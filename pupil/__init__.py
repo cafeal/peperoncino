@@ -16,7 +16,7 @@ from pupil.processings.drop_columns import DropColumns  # NOQA
 from pupil.processings.drop_duplicates import DropDuplicates  # NOQA
 from pupil.processings.combinations import Combinations  # NOQA
 from pupil.processings.select import Select  # NOQA
-
+from pupil.processings.stats_encoding import StatsEncoding  # NOQA
 
 def get_logger():  # type: ignore
     import logging
