@@ -1,7 +1,7 @@
 import pytest
 from pandas.testing import assert_frame_equal
 import pandas as pd
-import pupil as pp
+import peperoncino as pp
 
 
 class TestSelet:

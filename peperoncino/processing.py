@@ -5,7 +5,7 @@ from typing import List, Set, Dict, Union, Any, Optional
 import numpy as np
 import pandas as pd
 
-import pupil as pp
+import peperoncino as pp
 
 
 class ColumnsChangedError(Exception):

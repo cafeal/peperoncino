@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "pupil"
-version = "0.1.0"
+name = "peperoncino"
+version = "0.0.1"
 description = ""
 authors = ["Junki Ishikawa <69guitar1015@gmail.com>"]
 

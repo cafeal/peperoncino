@@ -1,6 +1,6 @@
 from typing import List
 import pandas as pd
-from pupil import BaseProcessing
+from peperoncino import BaseProcessing
 
 
 class StatsEncoding(BaseProcessing):

@@ -1,6 +1,6 @@
 from typing import List, Optional
 import pandas as pd
-from pupil import SeparatedProcessing
+from peperoncino import SeparatedProcessing
 
 
 class DropDuplicates(SeparatedProcessing):

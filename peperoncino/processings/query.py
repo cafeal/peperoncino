@@ -1,5 +1,5 @@
 import pandas as pd
-from pupil import SeparatedProcessing
+from peperoncino import SeparatedProcessing
 
 
 class Query(SeparatedProcessing):

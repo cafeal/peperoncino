@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-import pupil as pp
+import peperoncino as pp
 
 
 class TestAsCategory:

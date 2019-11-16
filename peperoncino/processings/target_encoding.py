@@ -1,6 +1,6 @@
 from typing import List
 import pandas as pd
-from pupil import BaseProcessing
+from peperoncino import BaseProcessing
 
 
 def _broadcast_stats(stats: pd.DataFrame, df: pd.DataFrame) -> pd.DataFrame:

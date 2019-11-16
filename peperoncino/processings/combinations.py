@@ -6,7 +6,7 @@ from itertools import combinations_with_replacement
 from typing import List
 import pandas as pd
 
-from pupil import SeparatedProcessing
+from peperoncino import SeparatedProcessing
 
 
 class Combinations(SeparatedProcessing):

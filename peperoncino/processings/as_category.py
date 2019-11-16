@@ -1,6 +1,6 @@
 from typing import List, Optional
 import pandas as pd
-from pupil import MergedProcessing
+from peperoncino import MergedProcessing
 
 
 class AsCategory(MergedProcessing):
