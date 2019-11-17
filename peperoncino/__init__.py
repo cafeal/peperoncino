@@ -19,6 +19,9 @@ from peperoncino.processings.select import Select  # NOQA
 from peperoncino.processings.stats_encoding import StatsEncoding  # NOQA
 from peperoncino.processings.target_encoding import TargetEncoding  # NOQA
 
+from peperoncino.utils.from_list import from_list  # NOQA
+from peperoncino.utils.from_yaml import from_yaml  # NOQA
+
 
 def get_logger():  # type: ignore
     import logging
