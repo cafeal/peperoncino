@@ -1,4 +1,4 @@
-__version__ = "0.1.0"
+__version__ = "0.0.1"
 
 from peperoncino.processing import BaseProcessing  # NOQA
 from peperoncino.processing import SeparatedProcessing  # NOQA
