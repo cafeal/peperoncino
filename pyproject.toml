@@ -9,6 +9,7 @@ authors = ["Junki Ishikawa <69guitar1015@gmail.com>"]
 python = "^3.７"
 numpy = "^1.17"
 pandas = "^0.25.3"
+pyyaml = "^5.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
