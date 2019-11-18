@@ -1,4 +1,4 @@
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 from peperoncino.processing import BaseProcessing  # NOQA
 from peperoncino.processing import SeparatedProcessing  # NOQA
@@ -9,6 +9,7 @@ from peperoncino.processing import RowsChangedError  # NOQA
 from peperoncino.processings.pipeline import Pipeline  # NOQA
 from peperoncino.processings.query import Query  # NOQA
 from peperoncino.processings.apply_column import ApplyColumn  # NOQA
+from peperoncino.processings.as_type import AsType  # NOQA
 from peperoncino.processings.as_category import AsCategory  # NOQA
 from peperoncino.processings.rename_columns import RenameColumns  # NOQA
 from peperoncino.processings.assign import Assign  # NOQA
