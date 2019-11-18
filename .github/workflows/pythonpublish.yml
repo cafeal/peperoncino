@@ -28,5 +28,5 @@ jobs:
       run: |
         $HOME/.poetry/bin/poetry publish \
             --build \
-            --username $PYPI USERNAME \
+            --username $PYPI_USERNAME \
             --password $PYPI_PASSWORD
