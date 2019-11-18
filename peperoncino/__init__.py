@@ -9,6 +9,7 @@ from peperoncino.processing import RowsChangedError  # NOQA
 from peperoncino.processings.pipeline import Pipeline  # NOQA
 from peperoncino.processings.query import Query  # NOQA
 from peperoncino.processings.apply_column import ApplyColumn  # NOQA
+from peperoncino.processings.as_type import AsType  # NOQA
 from peperoncino.processings.as_category import AsCategory  # NOQA
 from peperoncino.processings.rename_columns import RenameColumns  # NOQA
 from peperoncino.processings.assign import Assign  # NOQA
