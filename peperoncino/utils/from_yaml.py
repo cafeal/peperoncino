@@ -3,8 +3,30 @@ import peperoncino as pp
 
 
 def from_yaml(yml_string: str) -> pp.Pipeline:
-    """Create pipeline from yaml
-    
+    """Create pipeline from yaml.
+    `dict` corresponds to a processing
+    and `list` of `dict` corresponds to a pipeline.
+
+    ```
+    yml = '''
+    processing:
+        -   name: Query
+            query: "foo > 0"
+        -   name: DropColumns
+            cols:
+                - foo
+    '''
+
+    pipeline = pp.from_yaml(yml)
+
+    # `pipeline` equals to
+    #
+    # pp.Pipeline(
+    #     pp.Query("foo > 0")
+    #     pp.DropColumns(["foo"])
+    # )
+    ```
+
     Parameters
     ----------
     yml_string : str
@@ -13,25 +35,6 @@ def from_yaml(yml_string: str) -> pp.Pipeline:
         `name` key specifies processing class name
         and other keys are passed to it as arguments.
 
-        e.g.
-        yml = '''
-        processing:
-            -   name: Query
-                query: "foo > 0"
-            -   name: DropColumns
-                cols:
-                    - foo
-        '''
-
-        pipeline = pp.from_yaml(yml)
-        
-        # `pipeline` equals to
-        #
-        # pp.Pipeline(
-        #     pp.Query("foo > 0")
-        #     pp.DropColumns(["foo"])
-        # )
-    
     Returns
     -------
     pp.Pipeline

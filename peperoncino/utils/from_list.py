@@ -3,8 +3,25 @@ import peperoncino as pp
 
 
 def from_list(proc_list: List[Dict[str, Any]]) -> pp.Pipeline:
-    """Create pipeline from list
-    
+    """Create pipeline from list.
+    `dict` corresponds to a processing
+    and `list` of `dict` corresponds to a pipeline.
+
+    ```
+    proc_list = [
+        {"name": "Query", "query": "foo > 0"},
+        {"name": "DropColumns", "cols": ["foo"]},
+    ]
+
+    pipeline = pp.from_list(proc_list)
+
+    # this `pipeline` equals to
+    # pp.Pipeline(
+    #     pp.Query("foo > 0")
+    #     pp.DropColumns(["foo"])
+    # )
+    ```
+
     Parameters
     ----------
     proc_list : List[Dict[str, Any]]
