@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "peperoncino"
-version = "0.0.1"
+version = "0.0.2"
 description = "peperoncino: A library for easy data processing for pandas"
 readme = "README.md"
 authors = ["Junki Ishikawa <69guitar1015@gmail.com>"]
