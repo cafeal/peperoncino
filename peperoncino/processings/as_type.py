@@ -8,7 +8,8 @@ class AsType(SeparatedProcessing):
 
     Parameters
     ----------
-    mapping: Dict[str, ]
+    mapping: Dict[str, str]
+        Column - DType mapping.
     """
 
     def __init__(self, mapping: Dict[str, str]):
