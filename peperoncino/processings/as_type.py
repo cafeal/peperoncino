@@ -10,6 +10,8 @@ class AsType(SeparatedProcessing):
     ----------
     mapping: Dict[str, str]
         Column - DType mapping.
+        When the dtype is "datetime",
+        the column will be datetime type.
     """
 
     def __init__(self, mapping: Dict[str, str]):
