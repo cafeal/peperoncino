@@ -40,6 +40,6 @@ def from_yaml(yml_string: str) -> pp.Pipeline:
     pp.Pipeline
     """
 
-    yml = yaml.load(yml_string)
+    yml = yaml.load(yml_string, Loader=yaml.FullLoader)
     pipeline = pp.from_list(yml["processing"])
     return pipeline
